@@ -38,11 +38,11 @@ function logActivity(entry: {
   kind: ActivityKind;
   title: string;
   detail: string;
-  contactId?: Id;
-  companyId?: Id;
-  userId?: Id;
-  refId?: Id;
-  at?: string;
+  contactId?: Id | undefined;
+  companyId?: Id | undefined;
+  userId?: Id | undefined;
+  refId?: Id | undefined;
+  at?: string | undefined;
 }): Activity {
   const activity: Activity = {
     id: nextId("act"),
@@ -87,22 +87,22 @@ export const mockActivityService = {
 export interface ContactInput {
   firstName: string;
   lastName: string;
-  companyId?: Id;
-  companyName?: string;
-  jobTitle?: string;
+  companyId?: Id | undefined;
+  companyName?: string | undefined;
+  jobTitle?: string | undefined;
   phone: string;
-  additionalPhone?: string;
-  email?: string;
-  address?: string;
-  city?: string;
-  state?: string;
-  zip?: string;
-  country?: string;
-  leadSource?: string;
-  status?: Contact["status"];
-  assignedUserId?: Id;
-  tags?: string[];
-  notes?: string;
+  additionalPhone?: string | undefined;
+  email?: string | undefined;
+  address?: string | undefined;
+  city?: string | undefined;
+  state?: string | undefined;
+  zip?: string | undefined;
+  country?: string | undefined;
+  leadSource?: string | undefined;
+  status?: Contact["status"] | undefined;
+  assignedUserId?: Id | undefined;
+  tags?: string[] | undefined;
+  notes?: string | undefined;
 }
 
 export const mockContactService = {
@@ -283,15 +283,15 @@ export const mockCallService = {
   },
   /** Records a simulated call. No carrier is contacted. */
   logCall(input: {
-    contactId?: Id;
+    contactId?: Id | undefined;
     phone: string;
     fromNumber: string;
-    direction?: Call["direction"];
+    direction?: Call["direction"] | undefined;
     durationSeconds: number;
     status: Call["status"];
-    notes?: string;
-    campaignId?: Id;
-    listId?: Id;
+    notes?: string | undefined;
+    campaignId?: Id | undefined;
+    listId?: Id | undefined;
   }): Call {
     const s = getState();
     const contact = input.contactId
@@ -432,13 +432,13 @@ export const mockSmsService = {
 
 export interface TaskInput {
   type: Task["type"];
-  title?: string;
-  contactId?: Id;
-  companyId?: Id;
-  assignedUserId?: Id;
+  title?: string | undefined;
+  contactId?: Id | undefined;
+  companyId?: Id | undefined;
+  assignedUserId?: Id | undefined;
   dueAt: string;
-  priority?: Task["priority"];
-  notes?: string;
+  priority?: Task["priority"] | undefined;
+  notes?: string | undefined;
 }
 
 export const mockTaskService = {
@@ -519,17 +519,17 @@ export const mockTaskService = {
 /* ------------------------------------------------------------- appointments */
 
 export interface AppointmentInput {
-  contactId?: Id;
-  companyId?: Id;
-  assignedUserId?: Id;
+  contactId?: Id | undefined;
+  companyId?: Id | undefined;
+  assignedUserId?: Id | undefined;
   type: Appointment["type"];
   startAt: string;
   endAt: string;
-  timeZone?: string;
-  location?: string;
-  meetingLink?: string;
-  notes?: string;
-  status?: AppointmentStatus;
+  timeZone?: string | undefined;
+  location?: string | undefined;
+  meetingLink?: string | undefined;
+  notes?: string | undefined;
+  status?: AppointmentStatus | undefined;
 }
 
 export const mockAppointmentService = {
@@ -648,10 +648,10 @@ export const mockCampaignService = {
   },
   createCampaign(input: {
     name: string;
-    listId?: Id;
+    listId?: Id | undefined;
     callingNumber: string;
-    goal?: string;
-    startDate?: string;
+    goal?: string | undefined;
+    startDate?: string | undefined;
   }): Campaign {
     const s = getState();
     const list = input.listId ? s.lists.find((l) => l.id === input.listId) : undefined;
@@ -1021,7 +1021,7 @@ export interface SearchResult {
   title: string;
   subtitle: string;
   to: string;
-  params?: Record<string, string>;
+  params?: Record<string, string> | undefined;
 }
 
 export const mockSearchService = {
