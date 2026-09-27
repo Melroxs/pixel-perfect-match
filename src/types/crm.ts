@@ -39,7 +39,7 @@ export interface Company {
   state: string;
   status: CompanyStatus;
   assignedUserId: Id;
-  primaryContactId?: Id;
+  primaryContactId?: Id | undefined;
   notes: string;
   createdAt: string;
 }
@@ -48,10 +48,10 @@ export interface Contact {
   id: Id;
   firstName: string;
   lastName: string;
-  companyId?: Id;
+  companyId?: Id | undefined;
   jobTitle: string;
   phone: string;
-  additionalPhone?: string;
+  additionalPhone?: string | undefined;
   email: string;
   address: string;
   city: string;
@@ -65,8 +65,8 @@ export interface Contact {
   notes: string;
   archived: boolean;
   createdAt: string;
-  lastActivityAt?: string;
-  nextFollowUpAt?: string;
+  lastActivityAt?: string | undefined;
+  nextFollowUpAt?: string | undefined;
 }
 
 export type CallDirection = "Outbound" | "Inbound";
@@ -87,8 +87,8 @@ export type Disposition =
 
 export interface Call {
   id: Id;
-  contactId?: Id;
-  companyId?: Id;
+  contactId?: Id | undefined;
+  companyId?: Id | undefined;
   userId: Id;
   direction: CallDirection;
   phone: string;
@@ -96,13 +96,13 @@ export interface Call {
   startedAt: string;
   durationSeconds: number;
   status: CallStatus;
-  disposition?: Disposition;
+  disposition?: Disposition | undefined;
   notes: string;
-  campaignId?: Id;
-  listId?: Id;
+  campaignId?: Id | undefined;
+  listId?: Id | undefined;
   hasRecording: boolean;
-  relatedTaskId?: Id;
-  relatedAppointmentId?: Id;
+  relatedTaskId?: Id | undefined;
+  relatedAppointmentId?: Id | undefined;
 }
 
 export type SmsDirection = "Outbound" | "Inbound";
@@ -115,7 +115,7 @@ export interface SmsMessage {
   body: string;
   sentAt: string;
   status: SmsStatus;
-  userId?: Id;
+  userId?: Id | undefined;
 }
 
 export type TaskType = "Call" | "SMS" | "Email" | "Appointment" | "General";
@@ -126,8 +126,8 @@ export interface Task {
   id: Id;
   type: TaskType;
   title: string;
-  contactId?: Id;
-  companyId?: Id;
+  contactId?: Id | undefined;
+  companyId?: Id | undefined;
   assignedUserId: Id;
   dueAt: string;
   priority: TaskPriority;
@@ -153,8 +153,8 @@ export type AppointmentType =
 
 export interface Appointment {
   id: Id;
-  contactId?: Id;
-  companyId?: Id;
+  contactId?: Id | undefined;
+  companyId?: Id | undefined;
   assignedUserId: Id;
   type: AppointmentType;
   startAt: string;
@@ -181,13 +181,13 @@ export type CampaignStatus = "Draft" | "Active" | "Paused" | "Completed";
 export interface Campaign {
   id: Id;
   name: string;
-  listId?: Id;
+  listId?: Id | undefined;
   contactIds: Id[];
   assignedUserIds: Id[];
   callingNumber: string;
   status: CampaignStatus;
   startDate: string;
-  endDate?: string;
+  endDate?: string | undefined;
   goal: string;
 }
 
@@ -195,7 +195,7 @@ export interface PhoneNumber {
   id: Id;
   number: string;
   label: string;
-  assignedUserId?: Id;
+  assignedUserId?: Id | undefined;
   status: "Active" | "Inactive";
   capabilities: Array<"Voice" | "SMS">;
   provider: string;
@@ -207,7 +207,7 @@ export interface Provider {
   description: string;
   /** "Demo Connected" means simulated in this prototype — never a real connection. */
   connection: "Not Connected" | "Demo Connected" | "Coming Soon";
-  connectionName?: string;
+  connectionName?: string | undefined;
 }
 
 export type ActivityKind =
@@ -225,10 +225,10 @@ export interface Activity {
   title: string;
   detail: string;
   at: string;
-  contactId?: Id;
-  companyId?: Id;
-  userId?: Id;
-  refId?: Id;
+  contactId?: Id | undefined;
+  companyId?: Id | undefined;
+  userId?: Id | undefined;
+  refId?: Id | undefined;
 }
 
 export interface OrganizationSettings {
@@ -238,7 +238,7 @@ export interface OrganizationSettings {
   timeZone: string;
   defaultCountry: string;
   defaultCallingNumber: string;
-  logoName?: string;
+  logoName?: string | undefined;
 }
 
 export interface CallingSettings {
@@ -267,7 +267,7 @@ export interface RecordingSettings {
 export interface CalendarIntegration {
   /** "Demo Connected" is a simulated state — no real OAuth happens here. */
   google: "Not Connected" | "Demo Connected";
-  googleCalendarName?: string;
+  googleCalendarName?: string | undefined;
   googleSyncEnabled: boolean;
   outlook: "Coming Soon";
 }
@@ -305,18 +305,18 @@ export type DialerPhase =
 
 export interface DialerState {
   phase: DialerPhase;
-  activeContactId?: Id;
-  manualNumber?: string;
+  activeContactId?: Id | undefined;
+  manualNumber?: string | undefined;
   fromNumber: string;
   muted: boolean;
   transferring: boolean;
   seconds: number;
   notes: string;
-  disposition?: Disposition;
+  disposition?: Disposition | undefined;
   queueContactIds: Id[];
   queueIndex: number;
-  queueSourceLabel?: string;
-  lastCallId?: Id;
+  queueSourceLabel?: string | undefined;
+  lastCallId?: Id | undefined;
 }
 
 export interface CrmState {
